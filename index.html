@@ -1,0 +1,916 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Eighteen With Christy Laurent Lovely • 24.10.2008</title>
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,400;1,600;1,700&family=Italianno&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300&display=swap" rel="stylesheet">
+
+  <!-- Lucide Icons & Confetti -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            champagne: '#FAF6F0',
+            cremeSoft: '#F6EFE5',
+            parchment: '#EADECA',
+            blushPetal: '#F4E7E7',
+            roseMist: '#DDA7A5',
+            dustyRose: '#C37D82',
+            antiqueGold: '#D4AF37',
+            richGold: '#B8860B',
+            deepBurgundy: '#4A1525',
+            wineVelvet: '#2E0C15',
+            noirNight: '#150A0E'
+          },
+          fontFamily: {
+            serif: ['Cormorant Garamond', 'serif'],
+            playfair: ['Playfair Display', 'serif'],
+            script: ['Italianno', 'cursive'],
+            sans: ['Plus Jakarta Sans', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    :root {
+      --bg-cream: #FAF6F0;
+    }
+    body {
+      background-color: var(--bg-cream);
+      color: #2D1D22;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      overflow-x: hidden;
+      -webkit-tap-highlight-color: transparent;
+      user-select: none;
+    }
+
+    .film-grain {
+      position: fixed;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 60;
+      opacity: 0.04;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+    }
+
+    .perspective-1000 {
+      perspective: 1200px;
+    }
+
+    .wax-seal {
+      background: radial-gradient(circle at 35% 35%, #8B1E3F 0%, #4A1525 70%, #290812 100%);
+      box-shadow: inset 0 2px 4px rgba(255,255,255,0.4), 0 10px 25px rgba(74, 21, 37, 0.55);
+    }
+
+    .candle-flame {
+      background: radial-gradient(ellipse at bottom, #FFFFFF 0%, #FFE57F 35%, #FF7A00 70%, rgba(255, 60, 0, 0) 100%);
+      border-radius: 50% 50% 30% 30%;
+      box-shadow: 0 0 18px rgba(255, 180, 0, 0.9), 0 0 35px rgba(230, 81, 0, 0.6);
+      animation: flicker 1.2s ease-in-out infinite alternate;
+      transform-origin: 50% 90%;
+    }
+    @keyframes flicker {
+      0% { transform: scale(1) rotate(-1.5deg); }
+      30% { transform: scale(1.06, 0.95) rotate(2deg); }
+      70% { transform: scale(0.96, 1.04) rotate(-2deg); }
+      100% { transform: scale(1.02, 0.98) rotate(1deg); }
+    }
+
+    .spinning-vinyl {
+      animation: spinVinyl 5s linear infinite;
+    }
+    .paused-vinyl {
+      animation-play-state: paused;
+    }
+    @keyframes spinVinyl {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    .washi-tape {
+      background: rgba(244, 231, 231, 0.88);
+      border-left: 2px dashed rgba(195, 125, 130, 0.4);
+      border-right: 2px dashed rgba(195, 125, 130, 0.4);
+      backdrop-filter: blur(2px);
+    }
+
+    .polaroid-shadow {
+      box-shadow: 0 20px 38px -12px rgba(74, 21, 37, 0.16), 0 0 0 1px rgba(221, 167, 165, 0.28);
+    }
+  </style>
+</head>
+<body class="relative min-h-screen">
+
+  <div class="film-grain"></div>
+
+  <!-- Ambient Blossom Petals Canvas -->
+  <canvas id="ambient-canvas" class="fixed inset-0 w-full h-full pointer-events-none z-10"></canvas>
+
+  <!-- INTRO SCREEN (ENVELOPE WAX SEAL) -->
+  <div id="envelopeScreen" class="fixed inset-0 z-50 bg-[#14080D] flex flex-col items-center justify-center p-4 transition-all duration-1000 ease-in-out">
+    <div class="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-deepBurgundy/50 via-[#180a11] to-[#0c0307]"></div>
+
+    <div class="relative max-w-sm w-full perspective-1000" id="envelopeWrapper">
+      <div id="envelopeBody" class="relative bg-[#F7F2EB] rounded-3xl p-7 shadow-2xl border border-roseMist/30 transition-transform duration-700">
+        
+        <div class="absolute -top-3 left-1/2 -translate-x-1/2 w-32 h-6 washi-tape rotate-[-1deg] shadow-sm"></div>
+
+        <div class="text-center space-y-4 pt-4">
+          <div class="inline-flex items-center gap-2 text-[10px] tracking-[0.3em] font-semibold text-dustyRose uppercase">
+            <span>Special Delivery</span>
+            <span>•</span>
+            <span>24.10.2008</span>
+          </div>
+
+          <div class="space-y-1">
+            <p class="font-script text-3xl sm:text-4xl text-dustyRose leading-none">Exclusively Prepared For</p>
+            <h1 class="font-playfair text-3xl sm:text-4xl text-deepBurgundy font-bold tracking-tight">
+              Christy Laurent Lovely
+            </h1>
+            <p class="font-serif italic text-base text-stone-600">The 18th Chapter in All Its Grace</p>
+          </div>
+
+          <p class="font-sans text-xs text-stone-600 leading-relaxed font-light px-2 pt-1">
+            Sebuah arsip digital penuh rekaman cinta, melodi, dan kenangan indah untuk menyambut hari kedewasaanmu.
+          </p>
+
+          <div class="pt-6 pb-2 flex flex-col items-center">
+            <button id="openEnvelopeBtn" class="group relative flex flex-col items-center justify-center w-24 h-24 wax-seal rounded-full transition-transform active:scale-90 duration-300">
+              <div class="absolute inset-1.5 rounded-full border border-amber-300/40 flex flex-col items-center justify-center">
+                <span class="font-playfair text-2xl text-parchment font-bold tracking-widest group-hover:scale-110 transition-transform">CLL</span>
+                <span class="text-[9px] tracking-[0.25em] text-parchment/90 font-mono -mt-1">18 YEARS</span>
+              </div>
+            </button>
+            <p class="text-[11px] font-serif italic text-stone-500 mt-4 tracking-wider flex items-center gap-1.5">
+              <i data-lucide="sparkles" class="w-3.5 h-3.5 text-antiqueGold"></i> Sentuh cap lilin wax untuk membuka surat
+            </p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- FLOATING LUXURY VINYL PLAYER -->
+  <aside class="fixed bottom-4 left-4 right-4 z-40 max-w-sm mx-auto">
+    <div class="bg-white/90 backdrop-blur-md rounded-2xl p-2.5 shadow-2xl border border-blushPetal/80 flex items-center justify-between">
+      
+      <div class="flex items-center gap-3">
+        <div id="vinylDisc" class="w-12 h-12 rounded-full bg-stone-900 border-2 border-stone-800 shadow-md flex items-center justify-center relative spinning-vinyl paused-vinyl">
+          <div class="w-9 h-9 rounded-full border border-stone-700/60 flex items-center justify-center">
+            <div class="w-6 h-6 rounded-full border border-stone-700/40 flex items-center justify-center">
+              <div class="w-4 h-4 rounded-full bg-deepBurgundy border border-antiqueGold flex items-center justify-center">
+                <span class="w-1 h-1 bg-white rounded-full"></span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="text-left">
+          <p class="font-serif italic text-sm text-deepBurgundy font-semibold leading-tight">Lovely's Melody</p>
+          <p class="text-[10px] text-stone-500 font-light flex items-center gap-1">
+            <span id="vinylStatusText">Tap play to listen</span>
+            <span class="flex items-end gap-0.5 h-2.5 ml-1" id="eqBars">
+              <span class="w-0.5 h-1 bg-dustyRose rounded-full transition-all"></span>
+              <span class="w-0.5 h-2 bg-dustyRose rounded-full transition-all"></span>
+              <span class="w-0.5 h-1.5 bg-dustyRose rounded-full transition-all"></span>
+            </span>
+          </p>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-2 pr-1">
+        <button id="vinylPlayToggle" class="w-9 h-9 rounded-full bg-deepBurgundy text-parchment flex items-center justify-center shadow-md active:scale-90 transition">
+          <i data-lucide="play" id="vinylIcon" class="w-4 h-4 fill-parchment ml-0.5"></i>
+        </button>
+      </div>
+    </div>
+  </aside>
+
+  <!-- MAIN SCROLLABLE JOURNAL CONTENT -->
+  <main id="mainExperience" class="relative opacity-0 transition-opacity duration-1000 z-20 max-w-lg mx-auto px-4 pt-10 pb-32 space-y-20">
+
+    <!-- EDITORIAL HEADER -->
+    <header class="text-center pt-4 space-y-3">
+      <div class="inline-flex items-center gap-2 text-[10px] tracking-[0.3em] uppercase text-dustyRose font-semibold">
+        <span class="w-8 h-[1px] bg-dustyRose"></span>
+        <span>A Tribute to Sweet Eighteen</span>
+        <span class="w-8 h-[1px] bg-dustyRose"></span>
+      </div>
+
+      <div class="space-y-1">
+        <p class="font-script text-4xl sm:text-5xl text-dustyRose">To The Beloved</p>
+        <h2 class="font-playfair text-4xl sm:text-5xl text-deepBurgundy font-bold leading-tight">
+          Christy Laurent Lovely
+        </h2>
+        <p class="font-serif italic text-2xl text-stone-600">The Light of My Entire World</p>
+      </div>
+
+      <!-- Realtime Lifetime Counter -->
+      <div class="pt-4">
+        <div class="bg-cremeSoft/80 backdrop-blur-sm rounded-3xl p-5 border border-roseMist/40 shadow-sm">
+          <div class="flex items-center justify-center gap-1.5 text-[11px] tracking-widest uppercase text-stone-500 font-medium mb-3">
+            <i data-lucide="heart" class="w-3.5 h-3.5 text-dustyRose fill-dustyRose"></i>
+            <span>Christy Telah Ada Di Bumi Selama:</span>
+          </div>
+
+          <div class="grid grid-cols-4 gap-2 text-center">
+            <div class="bg-white/85 py-3 rounded-2xl shadow-sm border border-blushPetal">
+              <span id="counterDays" class="block font-serif text-2xl font-bold text-deepBurgundy">--</span>
+              <span class="text-[9px] uppercase tracking-widest text-stone-400">Hari</span>
+            </div>
+            <div class="bg-white/85 py-3 rounded-2xl shadow-sm border border-blushPetal">
+              <span id="counterHours" class="block font-serif text-2xl font-bold text-deepBurgundy">--</span>
+              <span class="text-[9px] uppercase tracking-widest text-stone-400">Jam</span>
+            </div>
+            <div class="bg-white/85 py-3 rounded-2xl shadow-sm border border-blushPetal">
+              <span id="counterMins" class="block font-serif text-2xl font-bold text-deepBurgundy">--</span>
+              <span class="text-[9px] uppercase tracking-widest text-stone-400">Menit</span>
+            </div>
+            <div class="bg-white/85 py-3 rounded-2xl shadow-sm border border-blushPetal">
+              <span id="counterSecs" class="block font-serif text-2xl font-bold text-dustyRose">--</span>
+              <span class="text-[9px] uppercase tracking-widest text-stone-400">Detik</span>
+            </div>
+          </div>
+          <p class="text-[10px] text-stone-400 italic mt-3 font-serif">Lahir: Jumat, 24 Oktober 2008 • Umur 18 Tahun</p>
+        </div>
+      </div>
+    </header>
+
+    <!-- SECTION 1: LANDSCAPE CINEMATIC 35MM REEL (16:9) -->
+    <section class="space-y-3">
+      <div class="flex items-center justify-between px-1">
+        <div>
+          <span class="text-[10px] tracking-[0.25em] uppercase text-dustyRose font-semibold">Cinema Chapter 01</span>
+          <h3 class="font-serif italic text-2xl text-deepBurgundy">35mm Landscape Reel</h3>
+        </div>
+        <span class="text-xs font-serif italic text-stone-400">16:9 Cinematic</span>
+      </div>
+
+      <div class="bg-[#FAF5EE] p-3 rounded-3xl polaroid-shadow border border-roseMist/40 space-y-2.5">
+        <div class="flex justify-between items-center px-3 py-1.5 bg-stone-900 rounded-lg">
+          <div class="flex gap-2">
+            <span class="w-3 h-2 bg-stone-700 rounded-sm"></span>
+            <span class="w-3 h-2 bg-stone-700 rounded-sm"></span>
+            <span class="w-3 h-2 bg-stone-700 rounded-sm"></span>
+          </div>
+          <span class="text-[9px] tracking-widest text-stone-400 font-mono">KODAK 2410 • SCENE 18</span>
+          <div class="flex gap-2">
+            <span class="w-3 h-2 bg-stone-700 rounded-sm"></span>
+            <span class="w-3 h-2 bg-stone-700 rounded-sm"></span>
+            <span class="w-3 h-2 bg-stone-700 rounded-sm"></span>
+          </div>
+        </div>
+
+        <div class="relative w-full aspect-[16/9] rounded-2xl overflow-hidden bg-stone-900 group">
+          <!-- Video element: playsinline and full audio ready -->
+          <video 
+            id="videoLandscape" 
+            class="w-full h-full object-cover" 
+            playsinline 
+            webkit-playsinline
+            preload="auto"
+            loop>
+            <source src="video_landscape.mp4" type="video/mp4">
+            Browser tidak mendukung tag video.
+          </video>
+
+          <div id="overlayLandscape" onclick="playMediaVideo('videoLandscape', 'playIconLandscape', 'overlayLandscape')" class="absolute inset-0 bg-stone-950/40 backdrop-blur-[2px] flex flex-col items-center justify-center cursor-pointer transition-opacity">
+            <div class="w-16 h-16 rounded-full bg-white/95 shadow-2xl flex items-center justify-center text-deepBurgundy border border-blushPetal transform group-hover:scale-110 active:scale-95 transition">
+              <i data-lucide="play" id="playIconLandscape" class="w-7 h-7 ml-1 fill-deepBurgundy"></i>
+            </div>
+            <span class="text-[11px] text-white/90 mt-2 font-serif italic tracking-wider flex items-center gap-1">
+              <i data-lucide="volume-2" class="w-3.5 h-3.5"></i> Putar dengan Suara
+            </span>
+          </div>
+        </div>
+
+        <div class="text-center pt-1 pb-1">
+          <p class="font-script text-3xl text-deepBurgundy">"Christy, kehadiranmu mengubah setiap hal biasa menjadi istimewa."</p>
+          <p class="text-[10px] text-stone-400 font-mono">File: video_landscape.mp4</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 2: PHOTO SCRAPBOOK & LIGHTBOX GALLERY -->
+    <section class="space-y-4">
+      <div class="text-center space-y-1">
+        <span class="text-[10px] tracking-[0.3em] uppercase text-dustyRose font-semibold">Visual Memoir</span>
+        <h3 class="font-serif italic text-3xl text-deepBurgundy">Gallery of Christy</h3>
+        <p class="text-xs text-stone-500 font-light">Sentuh foto untuk memperbesar potret kenangan.</p>
+      </div>
+
+      <div class="grid grid-cols-2 gap-3.5">
+        
+        <!-- Photo 1 -->
+        <div onclick="openLightbox('foto1.jpeg', 'Her Radiant Smile', 'Senyuman Christy yang selalu menghangatkan hari-hariku.')" class="relative bg-[#FAF5EE] p-3 rounded-2xl polaroid-shadow border border-roseMist/30 rotate-[-1.5deg] hover:rotate-0 transition-transform cursor-pointer">
+          <div class="absolute -top-2 left-1/2 -translate-x-1/2 w-14 h-4 washi-tape shadow-xs"></div>
+          <div class="w-full aspect-[4/5] rounded-xl overflow-hidden bg-stone-100">
+            <img 
+              src="foto1.jpeg" 
+              alt="Christy Laurent Lovely" 
+              class="w-full h-full object-cover" 
+              onerror="this.onerror=null; this.src='foto1.jpg';">
+          </div>
+          <p class="font-script text-2xl text-center text-deepBurgundy mt-2 leading-none">Radiant Smile</p>
+          <p class="text-[9px] text-center text-stone-400 font-sans">foto1</p>
+        </div>
+
+        <!-- Photo 2 -->
+        <div onclick="openLightbox('foto2.jpeg', 'Those Sparkly Eyes', 'Tatapan teduh yang selalu membikin rindu.')" class="relative bg-[#FAF5EE] p-3 rounded-2xl polaroid-shadow border border-roseMist/30 rotate-[1.5deg] hover:rotate-0 transition-transform cursor-pointer">
+          <div class="absolute -top-2 right-3 w-7 h-8 border border-dashed border-stone-400 bg-stone-50 rounded text-[7px] flex flex-col items-center justify-center text-stone-500 font-mono">
+            <span>24</span>
+            <span class="text-[6px]">OCT</span>
+          </div>
+          <div class="w-full aspect-[4/5] rounded-xl overflow-hidden bg-stone-100">
+            <img 
+              src="foto2.jpeg" 
+              alt="Christy Laurent Lovely" 
+              class="w-full h-full object-cover" 
+              onerror="this.onerror=null; this.src='foto2.jpg';">
+          </div>
+          <p class="font-script text-2xl text-center text-deepBurgundy mt-2 leading-none">Sweetest Eyes</p>
+          <p class="text-[9px] text-center text-stone-400 font-sans">foto2</p>
+        </div>
+
+        <!-- Photo 3 -->
+        <div onclick="openLightbox('foto3.jpeg', 'Grace & Elegance', 'Sosok anggun yang selalu kubanggakan setiap saat.')" class="relative bg-[#FAF5EE] p-3 rounded-2xl polaroid-shadow border border-roseMist/30 rotate-[1deg] hover:rotate-0 transition-transform cursor-pointer">
+          <div class="w-full aspect-[4/5] rounded-xl overflow-hidden bg-stone-100">
+            <img 
+              src="foto3.jpeg" 
+              alt="Christy Laurent Lovely" 
+              class="w-full h-full object-cover" 
+              onerror="this.onerror=null; this.src='foto3.jpg';">
+          </div>
+          <p class="font-script text-2xl text-center text-deepBurgundy mt-2 leading-none">Pure Grace</p>
+          <p class="text-[9px] text-center text-stone-400 font-sans">foto3</p>
+        </div>
+
+        <!-- Photo 4 -->
+        <div onclick="openLightbox('foto4.jpeg', 'Lovely Forever', 'Cinta abadi untuk Christy Laurent Lovely.')" class="relative bg-[#FAF5EE] p-3 rounded-2xl polaroid-shadow border border-roseMist/30 rotate-[-1deg] hover:rotate-0 transition-transform cursor-pointer">
+          <div class="absolute -top-2 left-1/2 -translate-x-1/2 w-14 h-4 washi-tape shadow-xs"></div>
+          <div class="w-full aspect-[4/5] rounded-xl overflow-hidden bg-stone-100">
+            <img 
+              src="foto4.jpeg" 
+              alt="Christy Laurent Lovely" 
+              class="w-full h-full object-cover" 
+              onerror="this.onerror=null; this.src='foto4.jpg';">
+          </div>
+          <p class="font-script text-2xl text-center text-deepBurgundy mt-2 leading-none">Forever Mine</p>
+          <p class="text-[9px] text-center text-stone-400 font-sans">foto4</p>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- SECTION 3: PORTRAIT VIDEO (9:16 POLAROID STORY) -->
+    <section class="space-y-3">
+      <div class="flex items-center justify-between px-1">
+        <div>
+          <span class="text-[10px] tracking-[0.25em] uppercase text-dustyRose font-semibold">Cinema Chapter 02</span>
+          <h3 class="font-serif italic text-2xl text-deepBurgundy">Instant Polaroid Reel</h3>
+        </div>
+        <span class="text-xs font-serif italic text-stone-400">9:16 Vertical</span>
+      </div>
+
+      <div class="max-w-[310px] mx-auto bg-[#FAF5EE] p-4 rounded-3xl polaroid-shadow border border-roseMist/40 space-y-3">
+        <div class="flex items-center justify-between text-[11px] font-serif px-1 text-stone-500">
+          <span class="tracking-widest uppercase">My Muse, Christy</span>
+          <span class="italic text-antiqueGold font-semibold">Sweet 18</span>
+        </div>
+
+        <div class="relative w-full aspect-[9/16] rounded-2xl overflow-hidden bg-stone-900 shadow-inner group">
+          <video 
+            id="videoPortrait" 
+            class="w-full h-full object-cover" 
+            playsinline 
+            webkit-playsinline
+            preload="auto"
+            loop>
+            <source src="video_portrait.mp4" type="video/mp4">
+            Format video tidak didukung.
+          </video>
+
+          <div id="overlayPortrait" onclick="playMediaVideo('videoPortrait', 'playIconPortrait', 'overlayPortrait')" class="absolute inset-0 bg-stone-950/40 backdrop-blur-[2px] flex flex-col items-center justify-center cursor-pointer transition-opacity">
+            <div class="w-14 h-14 rounded-full bg-white/95 shadow-2xl flex items-center justify-center text-deepBurgundy border border-blushPetal transform group-hover:scale-110 active:scale-95 transition">
+              <i data-lucide="play" id="playIconPortrait" class="w-6 h-6 ml-1 fill-deepBurgundy"></i>
+            </div>
+            <span class="text-[10px] text-white/90 mt-2 font-serif italic tracking-wider flex items-center gap-1">
+              <i data-lucide="volume-2" class="w-3.5 h-3.5"></i> Putar dengan Suara
+            </span>
+          </div>
+        </div>
+
+        <div class="text-center pt-1 pb-1">
+          <p class="font-script text-3xl text-deepBurgundy">"Cantikmu tak pernah pudar oleh waktu..."</p>
+          <p class="text-[10px] text-stone-400 font-mono">File: video_portrait.mp4</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 4: TYPEWRITER LOVE LETTER -->
+    <section class="bg-[#FAF5EE] rounded-3xl p-6 sm:p-8 polaroid-shadow border border-roseMist/40 space-y-4 relative">
+      <div class="absolute -top-3 left-6 px-3 py-0.5 bg-parchment text-[10px] tracking-widest uppercase font-serif text-deepBurgundy border border-roseMist/40 rounded-md">
+        An Unfolded Parchment
+      </div>
+
+      <div class="space-y-3 font-serif text-stone-700 pt-2 leading-relaxed text-base">
+        <h4 class="font-playfair text-2xl text-deepBurgundy font-bold">
+          Dear Christy Laurent Lovely,
+        </h4>
+
+        <div id="typewriterText" class="font-light italic space-y-3 min-h-[140px]">
+          <!-- Interactive typewriter injects here -->
+        </div>
+
+        <div class="pt-4 border-t border-roseMist/30 flex justify-between items-end">
+          <div>
+            <p class="text-[10px] uppercase tracking-widest text-stone-400 font-sans">Selamanya Milikmu,</p>
+            <p class="font-script text-4xl text-dustyRose leading-none">With Endless Love</p>
+          </div>
+          <span class="text-xs font-serif italic text-stone-400">24 Oktober 2008 — Selamanya</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 5: 18 LOVE CAPSULE TOKENS -->
+    <section class="space-y-4">
+      <div class="text-center space-y-1">
+        <span class="text-[10px] tracking-[0.3em] uppercase text-dustyRose font-semibold">18 Tokens of Adoration</span>
+        <h3 class="font-serif italic text-3xl text-deepBurgundy">18 Hal Mengapa Christy Begitu Kucintai</h3>
+        <p class="text-xs text-stone-500 font-light">Ketuk tiap kapsul untuk membuka kata cinta.</p>
+      </div>
+
+      <div class="grid grid-cols-2 gap-2" id="tokensGrid"></div>
+    </section>
+
+    <!-- SECTION 6: INTERACTIVE 3D 18TH CANDLES & WISH -->
+    <section class="text-center space-y-5 pt-4">
+      <div class="space-y-1">
+        <span class="text-[10px] tracking-[0.3em] uppercase text-dustyRose font-semibold">Sacred Birthday Wish</span>
+        <h3 class="font-serif italic text-3xl text-deepBurgundy">Tiup Lilin 18 Christy</h3>
+        <p class="text-xs text-stone-500 font-light max-w-xs mx-auto">
+          Pejamkan matamu, panjatkan impian terindahmu di usia 18, lalu sentuh kedua lilin di bawah.
+        </p>
+      </div>
+
+      <div class="relative py-6 flex flex-col items-center justify-center">
+        <!-- Candles (1 & 8) -->
+        <div class="flex items-center gap-8 mb-[-4px] z-10">
+          <div class="flex flex-col items-center cursor-pointer group" onclick="blowCandleAction()">
+            <div id="flame1" class="w-4 h-7 candle-flame mb-1 transition-opacity duration-700"></div>
+            <div class="w-5 h-16 bg-gradient-to-b from-[#FFFDF7] via-parchment to-roseMist rounded-t-sm border border-stone-300 shadow-md flex items-center justify-center font-playfair font-bold text-sm text-deepBurgundy">
+              1
+            </div>
+          </div>
+
+          <div class="flex flex-col items-center cursor-pointer group" onclick="blowCandleAction()">
+            <div id="flame2" class="w-4 h-7 candle-flame mb-1 transition-opacity duration-700"></div>
+            <div class="w-5 h-16 bg-gradient-to-b from-[#FFFDF7] via-parchment to-roseMist rounded-t-sm border border-stone-300 shadow-md flex items-center justify-center font-playfair font-bold text-sm text-deepBurgundy">
+              8
+            </div>
+          </div>
+        </div>
+
+        <!-- Tier 1 Cake -->
+        <div class="w-56 h-11 bg-[#FFFDF9] rounded-2xl border border-roseMist/50 shadow-md flex items-center justify-around px-5">
+          <span class="w-2.5 h-2.5 rounded-full bg-dustyRose/60"></span>
+          <span class="w-2.5 h-2.5 rounded-full bg-antiqueGold/70"></span>
+          <span class="w-2.5 h-2.5 rounded-full bg-dustyRose/60"></span>
+          <span class="w-2.5 h-2.5 rounded-full bg-antiqueGold/70"></span>
+        </div>
+        <!-- Tier 2 Cake -->
+        <div class="w-72 h-16 bg-[#F6ECE1] rounded-3xl border border-roseMist/60 shadow-lg -mt-2 flex items-center justify-center">
+          <span class="font-serif italic text-xs tracking-widest text-deepBurgundy/80 uppercase font-semibold">Christy Laurent Lovely • 18th</span>
+        </div>
+        <!-- Gold Rim Plate -->
+        <div class="w-80 h-3 bg-white rounded-full shadow-xl border border-antiqueGold/40 mt-0.5"></div>
+      </div>
+
+      <button id="blowBtn" onclick="blowCandleAction()" class="px-8 py-3.5 rounded-full bg-deepBurgundy text-parchment text-xs font-serif uppercase tracking-widest shadow-xl active:scale-95 transition inline-flex items-center gap-2">
+        <i data-lucide="wind" class="w-4 h-4 text-blushPetal"></i>
+        <span id="blowBtnText">Ketuk Lilin Untuk Meniup</span>
+      </button>
+
+      <div id="wishReveal" class="hidden max-w-sm mx-auto p-6 rounded-3xl bg-[#FAF5EE] border-2 border-antiqueGold/50 text-stone-700 text-xs font-serif leading-relaxed shadow-xl transition-all duration-700">
+        <p class="font-playfair text-deepBurgundy font-bold text-base mb-1">Doa Indah Christy Telah Terkabul ✨</p>
+        <p class="italic text-stone-600">
+          "Semoga di babak ke-18 ini, setiap langkah Christy Laurent Lovely selalu diiringi kebahagiaan tak bertepi, kesehatan yang melimpah, rezeki yang melimpah, dan cinta yang selalu menghangatkan hatimu. Aku akan selalu ada di sampingmu Christy."
+        </p>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="text-center pt-8 pb-12 space-y-2 border-t border-roseMist/30">
+      <p class="font-script text-4xl text-dustyRose">Christy Laurent Lovely</p>
+      <p class="text-[10px] tracking-widest uppercase font-Plus Jakarta Sans text-stone-400">Sweet 18 • 24 Oktober 2008 — Selamanya</p>
+    </footer>
+
+  </main>
+
+  <!-- LIGHTBOX MODAL FOR PHOTOS -->
+  <div id="lightboxModal" class="fixed inset-0 z-50 bg-black/90 backdrop-blur-md hidden items-center justify-center p-4 transition-all" onclick="closeLightbox()">
+    <div class="relative max-w-sm w-full bg-[#FAF5EE] rounded-3xl p-4 shadow-2xl border border-roseMist/40" onclick="event.stopPropagation()">
+      <button onclick="closeLightbox()" class="absolute -top-3 -right-3 w-9 h-9 rounded-full bg-deepBurgundy text-white flex items-center justify-center shadow-lg">
+        <i data-lucide="x" class="w-5 h-5"></i>
+      </button>
+      <div class="w-full aspect-[4/5] rounded-2xl overflow-hidden bg-black mb-3">
+        <img id="lightboxImg" src="" alt="Christy" class="w-full h-full object-cover">
+      </div>
+      <h5 id="lightboxTitle" class="font-playfair text-xl text-deepBurgundy font-bold text-center"></h5>
+      <p id="lightboxDesc" class="font-serif italic text-xs text-stone-600 text-center mt-1"></p>
+    </div>
+  </div>
+
+  <script>
+    lucide.createIcons();
+
+    /* --- 1. Ambient Web Audio Synthesizer (Vinyl Theme) --- */
+    let audioCtx = null;
+    let isMelodyPlaying = false;
+    let melodyTimer = null;
+
+    function initAudio() {
+      if (audioCtx) return;
+      const AudioContext = window.AudioContext || window.webkitAudioContext;
+      audioCtx = new AudioContext();
+    }
+
+    function playNote(freq, start, duration) {
+      if (!audioCtx) return;
+      try {
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(freq, start);
+
+        gain.gain.setValueAtTime(0.0001, start);
+        gain.gain.exponentialRampToValueAtTime(0.12, start + 0.08);
+        gain.gain.exponentialRampToValueAtTime(0.00001, start + duration);
+
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+
+        osc.start(start);
+        osc.stop(start + duration);
+      } catch (e) {
+        console.error(e);
+      }
+    }
+
+    const melodyNotes = [
+      261.63, 329.63, 392.00, 493.88, 523.25,
+      220.00, 261.63, 329.63, 392.00,
+      174.61, 220.00, 261.63, 329.63,
+      196.00, 246.94, 293.66, 392.00
+    ];
+
+    function startMelody() {
+      initAudio();
+      if (audioCtx.state === 'suspended') {
+        audioCtx.resume();
+      }
+      isMelodyPlaying = true;
+      updateVinylUI(true);
+
+      let step = 0;
+      if (melodyTimer) clearInterval(melodyTimer);
+      melodyTimer = setInterval(() => {
+        if (!isMelodyPlaying) return;
+        const now = audioCtx.currentTime;
+        const note = melodyNotes[step % melodyNotes.length];
+        playNote(note, now, 2.4);
+
+        if (step % 2 === 0) {
+          playNote(note * 0.5, now + 0.1, 3.0);
+        }
+        step++;
+      }, 1000);
+    }
+
+    function stopMelody() {
+      isMelodyPlaying = false;
+      if (melodyTimer) clearInterval(melodyTimer);
+      updateVinylUI(false);
+    }
+
+    function updateVinylUI(playing) {
+      const vinylDisc = document.getElementById('vinylDisc');
+      const vinylIcon = document.getElementById('vinylIcon');
+      const vinylStatusText = document.getElementById('vinylStatusText');
+      const eqBars = document.getElementById('eqBars');
+
+      if (playing) {
+        vinylDisc.classList.remove('paused-vinyl');
+        vinylIcon.setAttribute('data-lucide', 'pause');
+        vinylStatusText.textContent = 'Playing Christy’s Theme...';
+        eqBars.classList.add('animate-pulse');
+      } else {
+        vinylDisc.classList.add('paused-vinyl');
+        vinylIcon.setAttribute('data-lucide', 'play');
+        vinylStatusText.textContent = 'Tap play to listen';
+        eqBars.classList.remove('animate-pulse');
+      }
+      lucide.createIcons();
+    }
+
+    document.getElementById('vinylPlayToggle').addEventListener('click', () => {
+      if (isMelodyPlaying) {
+        stopMelody();
+      } else {
+        startMelody();
+      }
+    });
+
+    /* --- 2. 3D Wax Seal Envelope Trigger --- */
+    const openEnvelopeBtn = document.getElementById('openEnvelopeBtn');
+    const envelopeScreen = document.getElementById('envelopeScreen');
+    const mainExperience = document.getElementById('mainExperience');
+
+    openEnvelopeBtn.addEventListener('click', () => {
+      startMelody();
+
+      confetti({
+        particleCount: 80,
+        spread: 80,
+        origin: { y: 0.6 },
+        colors: ['#D4AF37', '#F4E7E7', '#FAF6F0', '#C37D82']
+      });
+
+      envelopeScreen.style.opacity = '0';
+      envelopeScreen.style.transform = 'scale(0.95)';
+      setTimeout(() => {
+        envelopeScreen.style.display = 'none';
+        mainExperience.classList.remove('opacity-0');
+        mainExperience.classList.add('opacity-100');
+        startTypewriter();
+      }, 800);
+    });
+
+    /* --- 3. Video Custom Play/Pause with Sound Unmute --- */
+    function playMediaVideo(vidId, iconId, overlayId) {
+      const vid = document.getElementById(vidId);
+      const overlay = document.getElementById(overlayId);
+
+      // Hentikan background vinyl jika sedang bunyi agar suara video terdengar jelas
+      if (isMelodyPlaying) {
+        stopMelody();
+      }
+
+      // Pastikan video lain di-pause
+      const allVideos = document.querySelectorAll('video');
+      allVideos.forEach(v => {
+        if (v !== vid) {
+          v.pause();
+        }
+      });
+
+      if (vid.paused) {
+        vid.muted = false;       // Aktifkan suara
+        vid.volume = 1.0;        // Volume penuh
+        const playPromise = vid.play();
+        if (playPromise !== undefined) {
+          playPromise.then(() => {
+            overlay.classList.add('opacity-0', 'pointer-events-none');
+          }).catch(err => {
+            console.log("Autoplay dicegah browser, mencoba fallback:", err);
+            vid.muted = false;
+            vid.play();
+            overlay.classList.add('opacity-0', 'pointer-events-none');
+          });
+        }
+      } else {
+        vid.pause();
+        overlay.classList.remove('opacity-0', 'pointer-events-none');
+      }
+
+      vid.onended = () => {
+        overlay.classList.remove('opacity-0', 'pointer-events-none');
+      };
+      vid.onpause = () => {
+        overlay.classList.remove('opacity-0', 'pointer-events-none');
+      };
+    }
+
+    // Klik langsung pada video untuk pause
+    document.querySelectorAll('video').forEach(vid => {
+      vid.addEventListener('click', function() {
+        if (!this.paused) {
+          this.pause();
+        }
+      });
+    });
+
+    /* --- 4. Lightbox Modal for Photos --- */
+    function openLightbox(src, title, desc) {
+      document.getElementById('lightboxImg').src = src;
+      document.getElementById('lightboxTitle').textContent = title;
+      document.getElementById('lightboxDesc').textContent = desc;
+      const modal = document.getElementById('lightboxModal');
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+    }
+
+    function closeLightbox() {
+      const modal = document.getElementById('lightboxModal');
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+    }
+
+    /* --- 5. Typewriter Love Letter Effect --- */
+    const letterParagraphs = [
+      "Selamat ulang tahun ke-18, cintaku Christy Laurent Lovely.",
+      "Tepat pada 24 Oktober 2008, semesta membawa hadiah terindahnya ke dunia, dan hari ini gadis manis itu telah menginjak usia 18 tahun.",
+      "Menatapmu bertumbuh adalah salah satu kebahagiaan terbesar dalam hidupku. Apapun mimpi yang kau terbangkan ke langit, jemariku akan selalu menggenggammu erat, mendukungmu tanpa ragu."
+    ];
+
+    function startTypewriter() {
+      const container = document.getElementById('typewriterText');
+      container.innerHTML = "";
+      let pIdx = 0;
+      let charIdx = 0;
+
+      function typeChar() {
+        if (pIdx < letterParagraphs.length) {
+          if (!container.children[pIdx]) {
+            const p = document.createElement('p');
+            container.appendChild(p);
+          }
+          const currentP = container.children[pIdx];
+          currentP.textContent += letterParagraphs[pIdx].charAt(charIdx);
+          charIdx++;
+
+          if (charIdx < letterParagraphs[pIdx].length) {
+            setTimeout(typeChar, 24);
+          } else {
+            pIdx++;
+            charIdx = 0;
+            setTimeout(typeChar, 350);
+          }
+        }
+      }
+      typeChar();
+    }
+
+    /* --- 6. Generate 18 Love Tokens --- */
+    const reasons = [
+      "Senyumanmu yang menghangatkan", "Ketulusan hatimu", "Caramu memandangku",
+      "Suaramu yang menenangkan", "Ketangguhanmu melewati hari", "Kebaikanmu pada semua orang",
+      "Gayamu saat tertawa lepas", "Kesabaranmu yang luar biasa", "Selera humormu yang manis",
+      "Mata indahmu yang berbinar", "Pelukanmu yang paling nyaman", "Caramu peduli hal kecil",
+      "Semangatmu menggapai mimpi", "Kehangatan kehadiranmu", "Caramu membuatku bangga",
+      "Kesederhanaan sikapmu", "Kasih sayangmu yang tulus", "Karena kamu adalah Christy Lovely"
+    ];
+
+    const tokensGrid = document.getElementById('tokensGrid');
+    reasons.forEach((text, i) => {
+      const item = document.createElement('div');
+      item.className = "bg-[#FAF5EE] p-3 rounded-2xl border border-roseMist/30 text-left cursor-pointer active:scale-95 transition shadow-xs";
+      item.onclick = function() {
+        this.classList.toggle('bg-cremeSoft');
+        const content = this.querySelector('.token-text');
+        content.classList.toggle('hidden');
+      };
+      item.innerHTML = `
+        <div class="flex items-center justify-between text-deepBurgundy font-serif font-semibold text-xs">
+          <span>Token #${String(i+1).padStart(2, '0')}</span>
+          <i data-lucide="sparkle" class="w-3 h-3 text-antiqueGold"></i>
+        </div>
+        <p class="token-text hidden text-[11px] font-serif italic text-stone-600 pt-1 leading-snug">"${text}"</p>
+      `;
+      tokensGrid.appendChild(item);
+    });
+
+    /* --- 7. Candle Blowing Logic --- */
+    let blown = false;
+    function blowCandleAction() {
+      if (blown) return;
+      blown = true;
+
+      document.getElementById('flame1').style.opacity = '0';
+      document.getElementById('flame2').style.opacity = '0';
+      document.getElementById('blowBtnText').textContent = 'Doa Christy Dikirim Ke Langit ✨';
+      document.getElementById('wishReveal').classList.remove('hidden');
+
+      confetti({
+        particleCount: 180,
+        spread: 120,
+        origin: { y: 0.65 },
+        colors: ['#D4AF37', '#FAF6F0', '#C37D82', '#F4E7E7']
+      });
+    }
+
+    /* --- 8. Lifetime Milestone Counter Since 24.10.2008 --- */
+    function updateCounter() {
+      const birth = new Date(2008, 9, 24, 0, 0, 0); // 24 Okt 2008
+      const now = new Date();
+      const diff = now - birth;
+
+      if (diff > 0) {
+        const totalSecs = Math.floor(diff / 1000);
+        const days = Math.floor(totalSecs / 86400);
+        const hours = Math.floor((totalSecs % 86400) / 3600);
+        const minutes = Math.floor((totalSecs % 3600) / 60);
+        const seconds = Math.floor(totalSecs % 60);
+
+        document.getElementById('counterDays').innerText = days;
+        document.getElementById('counterHours').innerText = hours < 10 ? '0' + hours : hours;
+        document.getElementById('counterMins').innerText = minutes < 10 ? '0' + minutes : minutes;
+        document.getElementById('counterSecs').innerText = seconds < 10 ? '0' + seconds : seconds;
+      }
+    }
+    setInterval(updateCounter, 1000);
+    updateCounter();
+
+    /* --- 9. Ambient Falling Rose Petals Canvas --- */
+    const canvas = document.getElementById('ambient-canvas');
+    const ctx = canvas.getContext('2d');
+    let width, height;
+
+    function resizeCanvas() {
+      width = canvas.width = window.innerWidth;
+      height = canvas.height = window.innerHeight;
+    }
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
+
+    const particles = [];
+    const maxParticles = window.innerWidth < 640 ? 30 : 50;
+
+    class RomanticParticle {
+      constructor() {
+        this.reset();
+      }
+      reset() {
+        this.x = Math.random() * width;
+        this.y = -20;
+        this.size = Math.random() * 4 + 2;
+        this.speedY = Math.random() * 0.8 + 0.4;
+        this.speedX = Math.sin(Math.random() * 3) * 0.5;
+        this.angle = Math.random() * Math.PI * 2;
+        this.spin = (Math.random() - 0.5) * 0.03;
+        this.opacity = Math.random() * 0.5 + 0.3;
+        this.isPetal = Math.random() > 0.4;
+        this.color = this.isPetal ? '#E8C5C8' : '#D4AF37';
+      }
+      update() {
+        this.y += this.speedY;
+        this.x += this.speedX + Math.sin(this.y * 0.02) * 0.3;
+        this.angle += this.spin;
+        if (this.y > height + 20) this.reset();
+      }
+      draw() {
+        ctx.save();
+        ctx.translate(this.x, this.y);
+        ctx.rotate(this.angle);
+        ctx.fillStyle = this.color;
+        ctx.globalAlpha = this.opacity;
+
+        if (this.isPetal) {
+          ctx.beginPath();
+          ctx.ellipse(0, 0, this.size * 1.5, this.size, 0, 0, Math.PI * 2);
+          ctx.fill();
+        } else {
+          ctx.beginPath();
+          ctx.arc(0, 0, this.size * 0.7, 0, Math.PI * 2);
+          ctx.fill();
+        }
+        ctx.restore();
+      }
+    }
+
+    for (let i = 0; i < maxParticles; i++) {
+      const p = new RomanticParticle();
+      p.y = Math.random() * height;
+      particles.push(p);
+    }
+
+    function animate() {
+      ctx.clearRect(0, 0, width, height);
+      particles.forEach(p => {
+        p.update();
+        p.draw();
+      });
+      requestAnimationFrame(animate);
+    }
+    animate();
+  </script>
+</body>
+</html>
