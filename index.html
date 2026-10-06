@@ -253,25 +253,34 @@
       </div>
     </header>
 
-    <!-- SECTION 1: CINEMA CHAPTER 01 (PORTRAIT 9:16) -->
-    <!-- SECTION 1: CINEMA CHAPTER 01 (ADAPTIVE FRAME) -->
+<!-- SECTION 1: CINEMA CHAPTER 01 (LANDSCAPE 16:9) -->
     <section class="space-y-3">
       <div class="flex items-center justify-between px-1">
         <div>
           <span class="text-[10px] tracking-[0.25em] uppercase text-dustyRose font-semibold">Cinema Chapter 01</span>
-          <h3 class="font-serif italic text-2xl text-deepBurgundy">First Memory Reel</h3>
+          <h3 class="font-serif italic text-2xl text-deepBurgundy">35mm Landscape Reel</h3>
         </div>
-        <span class="text-xs font-serif italic text-stone-400">Memory Reel</span>
+        <span class="text-xs font-serif italic text-stone-400">16:9 Cinematic</span>
       </div>
 
-      <div class="max-w-[340px] sm:max-w-sm mx-auto bg-[#FAF5EE] p-3.5 sm:p-4 rounded-3xl polaroid-shadow border border-roseMist/40 space-y-3">
-        <div class="flex items-center justify-between text-[11px] font-serif px-1 text-stone-500">
-          <span class="tracking-widest uppercase">Chapter One</span>
-          <span class="italic text-antiqueGold font-semibold">Forever</span>
+      <div class="w-full bg-[#FAF5EE] p-3 sm:p-4 rounded-3xl polaroid-shadow border border-roseMist/40 space-y-2.5">
+        <!-- Film Header -->
+        <div class="flex justify-between items-center px-3 py-1.5 bg-stone-900 rounded-lg">
+          <div class="flex gap-2">
+            <span class="w-3 h-2 bg-stone-700 rounded-sm"></span>
+            <span class="w-3 h-2 bg-stone-700 rounded-sm"></span>
+            <span class="w-3 h-2 bg-stone-700 rounded-sm"></span>
+          </div>
+          <span class="text-[9px] tracking-widest text-stone-400 font-mono">KODAK 2410 • SCENE 18</span>
+          <div class="flex gap-2">
+            <span class="w-3 h-2 bg-stone-700 rounded-sm"></span>
+            <span class="w-3 h-2 bg-stone-700 rounded-sm"></span>
+            <span class="w-3 h-2 bg-stone-700 rounded-sm"></span>
+          </div>
         </div>
 
-        <!-- Frame yang menyesuaikan bentuk asli video tanpa ter-crop -->
-        <div class="relative w-full aspect-[4/5] rounded-2xl overflow-hidden bg-stone-900 shadow-inner flex items-center justify-center">
+        <!-- Frame 16:9 Lebar Sesuai Video -->
+        <div class="relative w-full aspect-[16/9] rounded-2xl overflow-hidden bg-black shadow-inner">
           <video 
             id="videoLandscape" 
             class="w-full h-full object-contain" 
