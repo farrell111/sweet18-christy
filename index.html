@@ -254,25 +254,27 @@
     </header>
 
     <!-- SECTION 1: CINEMA CHAPTER 01 (PORTRAIT 9:16) -->
+    <!-- SECTION 1: CINEMA CHAPTER 01 (ADAPTIVE FRAME) -->
     <section class="space-y-3">
       <div class="flex items-center justify-between px-1">
         <div>
           <span class="text-[10px] tracking-[0.25em] uppercase text-dustyRose font-semibold">Cinema Chapter 01</span>
           <h3 class="font-serif italic text-2xl text-deepBurgundy">First Memory Reel</h3>
         </div>
-        <span class="text-xs font-serif italic text-stone-400">9:16 Story</span>
+        <span class="text-xs font-serif italic text-stone-400">Memory Reel</span>
       </div>
 
-      <div class="max-w-[310px] mx-auto bg-[#FAF5EE] p-4 rounded-3xl polaroid-shadow border border-roseMist/40 space-y-3">
+      <div class="max-w-[340px] sm:max-w-sm mx-auto bg-[#FAF5EE] p-3.5 sm:p-4 rounded-3xl polaroid-shadow border border-roseMist/40 space-y-3">
         <div class="flex items-center justify-between text-[11px] font-serif px-1 text-stone-500">
           <span class="tracking-widest uppercase">Chapter One</span>
           <span class="italic text-antiqueGold font-semibold">Forever</span>
         </div>
 
-        <div class="relative w-full aspect-[9/16] rounded-2xl overflow-hidden bg-stone-950 shadow-inner">
+        <!-- Frame yang menyesuaikan bentuk asli video tanpa ter-crop -->
+        <div class="relative w-full aspect-[4/5] rounded-2xl overflow-hidden bg-stone-900 shadow-inner flex items-center justify-center">
           <video 
             id="videoLandscape" 
-            class="w-full h-full object-cover" 
+            class="w-full h-full object-contain" 
             playsinline 
             webkit-playsinline
             controls
