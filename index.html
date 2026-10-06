@@ -278,27 +278,18 @@
           </div>
         </div>
 
-        <div class="relative w-full aspect-[16/9] rounded-2xl overflow-hidden bg-stone-900 group">
-          <!-- Video element: playsinline and full audio ready -->
+        <div class="relative w-full aspect-[16/9] rounded-2xl overflow-hidden bg-stone-950">
           <video 
             id="videoLandscape" 
             class="w-full h-full object-cover" 
             playsinline 
             webkit-playsinline
-            preload="auto"
+            controls
+            preload="metadata"
             loop>
             <source src="video_landscape.mp4" type="video/mp4">
-            Browser tidak mendukung tag video.
+            Browser Anda tidak mendukung pemutar video.
           </video>
-
-          <div id="overlayLandscape" onclick="playMediaVideo('videoLandscape', 'playIconLandscape', 'overlayLandscape')" class="absolute inset-0 bg-stone-950/40 backdrop-blur-[2px] flex flex-col items-center justify-center cursor-pointer transition-opacity">
-            <div class="w-16 h-16 rounded-full bg-white/95 shadow-2xl flex items-center justify-center text-deepBurgundy border border-blushPetal transform group-hover:scale-110 active:scale-95 transition">
-              <i data-lucide="play" id="playIconLandscape" class="w-7 h-7 ml-1 fill-deepBurgundy"></i>
-            </div>
-            <span class="text-[11px] text-white/90 mt-2 font-serif italic tracking-wider flex items-center gap-1">
-              <i data-lucide="volume-2" class="w-3.5 h-3.5"></i> Putar dengan Suara
-            </span>
-          </div>
         </div>
 
         <div class="text-center pt-1 pb-1">
@@ -395,26 +386,18 @@
           <span class="italic text-antiqueGold font-semibold">Sweet 18</span>
         </div>
 
-        <div class="relative w-full aspect-[9/16] rounded-2xl overflow-hidden bg-stone-900 shadow-inner group">
+        <div class="relative w-full aspect-[9/16] rounded-2xl overflow-hidden bg-stone-950 shadow-inner">
           <video 
             id="videoPortrait" 
             class="w-full h-full object-cover" 
             playsinline 
             webkit-playsinline
-            preload="auto"
+            controls
+            preload="metadata"
             loop>
             <source src="video_portrait.mp4" type="video/mp4">
             Format video tidak didukung.
           </video>
-
-          <div id="overlayPortrait" onclick="playMediaVideo('videoPortrait', 'playIconPortrait', 'overlayPortrait')" class="absolute inset-0 bg-stone-950/40 backdrop-blur-[2px] flex flex-col items-center justify-center cursor-pointer transition-opacity">
-            <div class="w-14 h-14 rounded-full bg-white/95 shadow-2xl flex items-center justify-center text-deepBurgundy border border-blushPetal transform group-hover:scale-110 active:scale-95 transition">
-              <i data-lucide="play" id="playIconPortrait" class="w-6 h-6 ml-1 fill-deepBurgundy"></i>
-            </div>
-            <span class="text-[10px] text-white/90 mt-2 font-serif italic tracking-wider flex items-center gap-1">
-              <i data-lucide="volume-2" class="w-3.5 h-3.5"></i> Putar dengan Suara
-            </span>
-          </div>
         </div>
 
         <div class="text-center pt-1 pb-1">
@@ -519,7 +502,7 @@
     <!-- FOOTER -->
     <footer class="text-center pt-8 pb-12 space-y-2 border-t border-roseMist/30">
       <p class="font-script text-4xl text-dustyRose">Christy Laurent Lovely</p>
-      <p class="text-[10px] tracking-widest uppercase font-Plus Jakarta Sans text-stone-400">Sweet 18 • 24 Oktober 2008 — Selamanya</p>
+      <p class="text-[10px] tracking-[0.25em] uppercase font-sans text-stone-500 font-medium">Sweet 18 • 24 Oktober 2008 — Selamanya</p>
     </footer>
 
   </main>
@@ -664,57 +647,20 @@
       }, 800);
     });
 
-    /* --- 3. Video Custom Play/Pause with Sound Unmute --- */
-    function playMediaVideo(vidId, iconId, overlayId) {
-      const vid = document.getElementById(vidId);
-      const overlay = document.getElementById(overlayId);
-
-      // Hentikan background vinyl jika sedang bunyi agar suara video terdengar jelas
-      if (isMelodyPlaying) {
-        stopMelody();
-      }
-
-      // Pastikan video lain di-pause
-      const allVideos = document.querySelectorAll('video');
-      allVideos.forEach(v => {
-        if (v !== vid) {
-          v.pause();
+    /* --- 3. Smart Video Playback --- */
+    const allVideos = document.querySelectorAll('video');
+    allVideos.forEach(vid => {
+      vid.addEventListener('play', () => {
+        // Otomatis matikan musik latar belakang saat video ditonton
+        if (isMelodyPlaying) {
+          stopMelody();
         }
-      });
-
-      if (vid.paused) {
-        vid.muted = false;       // Aktifkan suara
-        vid.volume = 1.0;        // Volume penuh
-        const playPromise = vid.play();
-        if (playPromise !== undefined) {
-          playPromise.then(() => {
-            overlay.classList.add('opacity-0', 'pointer-events-none');
-          }).catch(err => {
-            console.log("Autoplay dicegah browser, mencoba fallback:", err);
-            vid.muted = false;
-            vid.play();
-            overlay.classList.add('opacity-0', 'pointer-events-none');
-          });
-        }
-      } else {
-        vid.pause();
-        overlay.classList.remove('opacity-0', 'pointer-events-none');
-      }
-
-      vid.onended = () => {
-        overlay.classList.remove('opacity-0', 'pointer-events-none');
-      };
-      vid.onpause = () => {
-        overlay.classList.remove('opacity-0', 'pointer-events-none');
-      };
-    }
-
-    // Klik langsung pada video untuk pause
-    document.querySelectorAll('video').forEach(vid => {
-      vid.addEventListener('click', function() {
-        if (!this.paused) {
-          this.pause();
-        }
+        // Jeda video lain yang sedang jalan
+        allVideos.forEach(otherVid => {
+          if (otherVid !== vid && !otherVid.paused) {
+            otherVid.pause();
+          }
+        });
       });
     });
 
